@@ -32,12 +32,9 @@
           admin_telnet: "disable"
           admin_https_ssl_versions: "tlsv1-3"
           admintimeout: "15"
-          alias: "{{ inventory_hostname }}"
           dh_params: "8192"
           fortiextender: "disable"
           fortitoken_cloud: "disable"
-          gui_date_format: "yyyy/MM/dd"
-          hostname: "{{ inventory_hostname }}"
           lldp_reception: "disable"
           lldp_transmission: "disable"
           login_timestamp: "enable"
@@ -46,10 +43,8 @@
           strong_crypto: "enable"
           ssl_static_key_ciphers: "disable"
           speedtest_server: "disable"
-          timezone: "26"
           #switch_controller: "disable"
           vdom_mode: "multi-vdom"
-          #edit-vdom-prompt: "enable"
           #wireless-controller: "disable"
 
     - name: Fortigate global hardening version < v7.0.1
