@@ -1,0 +1,103 @@
+---
+- name: Fortinet Fortigate hardening
+  hosts: all
+  connection: httpapi
+  gather_facts: true
+  collections:
+   - fortinet.fortios
+  vars:
+    ansible_httpapi_use_ssl: yes
+    ansible_httpapi_validate_certs: no
+    ansible_httpapi_port: 443
+  tasks:
+    - name: Collect Fortigate facts
+      fortios_monitor_fact:
+        selector: 'system_status'
+      register: system_status_output
+    
+    - name: Parse Fortigate version
+      set_fact:
+        fortigate_version: "{{ system_status_output.meta.version[1:] }}"
+    
+    - name: Fortigate global config hardening
+      fortios_system_global:
+        system_global:
+          admin_console_timeout: "15"
+          admin_lockout_duration: "900"
+          admin_lockout_threshold: "5"
+          admin_scp: "disable"
+          admin_sport: "443"
+          admin_ssh_grace_time: "30"
+          admin_ssh_v1: "disable"
+          admin_telnet: "disable"
+          admin_https_ssl_versions: "tlsv1-3"
+          admintimeout: "15"
+          alias: "{{ inventory_hostname }}"
+          dh_params: "8192"
+          fortiextender: "disable"
+          fortitoken_cloud: "disable"
+          gui_date_format: "yyyy/MM/dd"
+          hostname: "{{ inventory_hostname }}"
+          lldp_reception: "disable"
+          lldp_transmission: "disable"
+          login_timestamp: "enable"
+          revision_backup_on_logout: "enable"
+          revision_image_auto_backup: "enable"
+          strong_crypto: "enable"
+          ssl_static_key_ciphers: "disable"
+          speedtest_server: "disable"
+          timezone: "26"
+          #switch_controller: "disable"
+          vdom_mode: "multi-vdom"
+          #edit-vdom-prompt: "enable"
+          #wireless-controller: "disable"
+
+    - name: Fortigate global hardening version < v7.0.1
+      fortios_system_global:
+        system_global:
+          ssh_mac_weak: "disable"
+      when: fortigate_version is version("7.0.1",'<')
+
+    - name: Fortigate global hardening version v6.4.4 -> v7.0.1
+      fortios_system_global:
+        system_global:
+          fortiipam_integration: "disable"
+      when: (fortigate_version is version("6.4.4",'>')) and (fortigate_version is version("7.0.1",'<'))
+
+    - name: Fortigate global hardening version < 7.2.2
+      fortios_system_global:
+        system_global:
+          admin_maintainer: "disable"
+      when: fortigate_version is version("7.2.2",'<')
+
+    - name: Fortigate global hardening version > 7.4.1
+      fortios_system_global:
+        system_global:
+          sslvpn_web_mode: "disable"
+      when: fortigate_version is version("7.4.1",'>')
+
+    - name: Fortigate disable Auto-install
+      fortios_system_auto_install:
+        system_auto_install:
+          auto_install_config: "disable"
+          auto_install_image: "disable"
+
+    - name: Fortigate disable ntp server
+      fortios_system_ntp:
+        system_ntp:
+          server_mode: "disable"
+
+    - name: Fortigate global password policy
+      fortios_system_password_policy:
+        system_password_policy:
+          apply_to: "admin-password"
+          expire_day: "365"
+          expire_status: "enable"
+          min_change_characters: "4"
+          min_lower_case_letter: "1"
+          min_non_alphanumeric: "1"
+          min_number: "1"
+          min_upper_case_letter: "1"
+          minimum_length: "16"
+          reuse_password: "disable"
+          status: "enable"
