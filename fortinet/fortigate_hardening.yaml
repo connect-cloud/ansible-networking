@@ -2,12 +2,12 @@
 - name: Fortinet Fortigate hardening
   hosts: all
   connection: httpapi
-  gather_facts: true
+  gather_facts: false
   collections:
    - fortinet.fortios
   vars:
     ansible_httpapi_use_ssl: yes
-    ansible_httpapi_validate_certs: no
+    ansible_httpapi_validate_certs: no # set to yes for security
     ansible_httpapi_port: 443
   tasks:
     - name: Collect Fortigate facts
@@ -17,7 +17,7 @@
     
     - name: Parse Fortigate version
       set_fact:
-        fortigate_version: "{{ system_status_output.meta.version[1:] }}"
+        fortigate_version: "{{ system_status_output.meta.version[1:] }}" # strip de 'v' from the version number
     
     - name: Fortigate global config hardening
       fortios_system_global:
