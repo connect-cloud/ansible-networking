@@ -1,0 +1,21 @@
+---
+- name: Get sensor info
+  hosts: all
+  connection: httpapi
+  gather_facts: false
+  collections:
+   - fortinet.fortios
+  vars:
+    ansible_httpapi_use_ssl: yes
+    ansible_httpapi_validate_certs: no
+    ansible_httpapi_port: 443
+  tasks:
+    - name: Collect Fortigate facts
+      fortios_monitor_fact:
+        selector: 'system_sensor-info'
+      register: system_status_output
+    
+    - name: Parse Fortigate version
+      debug:
+        msg: "{{ system_status_output }}"
+    
