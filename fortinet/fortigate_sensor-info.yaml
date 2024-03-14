@@ -1,5 +1,5 @@
 ---
-- name: Get sensor info
+- name: Configure firewall FW2
   hosts: all
   connection: httpapi
   gather_facts: false
@@ -14,7 +14,6 @@
       fortios_monitor_fact:
         selector: 'system_status'
       register: system_status_output
-    
     - name: Parse Fortigate version
       debug:
         msg: "{{ system_status_output }}"
