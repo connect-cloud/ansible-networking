@@ -12,7 +12,7 @@
   tasks:
     - name: Collect Fortigate facts
       fortios_monitor_fact:
-        selector: 'system_sensor-info'
+        selector: 'system_status'
       register: system_status_output
     
     - name: Parse Fortigate version
