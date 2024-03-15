@@ -1,5 +1,5 @@
 ---
-- name: Configure firewall FW2
+- name: Fortinet Fortigate gather HA-info
   hosts: all
   connection: httpapi
   gather_facts: false
@@ -12,7 +12,7 @@
   tasks:
     - name: Collect Fortigate facts
       fortios_monitor_fact:
-        selector: 'system_status'
+        selector: 'system_ha-statistics'
       register: system_status_output
     - name: Parse Fortigate version
       debug:
