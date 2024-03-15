@@ -44,6 +44,7 @@
           revision_image_auto_backup: "enable"
           strong_crypto: "enable"
           ssl_static_key_ciphers: "disable"
+          ssl_min_proto_version: "TLSv1-3"
           speedtest_server: "disable"
           #switch_controller: "disable"
           #wireless-controller: "disable"
