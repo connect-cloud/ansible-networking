@@ -44,7 +44,6 @@
           ssl_static_key_ciphers: "disable"
           speedtest_server: "disable"
           #switch_controller: "disable"
-          vdom_mode: "multi-vdom"
           #wireless-controller: "disable"
 
     - name: Fortigate global hardening version < v7.0.1
