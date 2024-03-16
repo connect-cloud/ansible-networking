@@ -1,0 +1,12 @@
+---
+vlans:
+  - name: VLAN10-INTERNAL
+    vlan_id: 10
+    state: active
+    mtu: 1500
+    shutdown: disabled
+  - name: VLAN99-NATIVE
+    vlan_id: 99
+    state: active
+    mtu: 1500
+    shutdown: disabled

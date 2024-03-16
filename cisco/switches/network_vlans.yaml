@@ -1,0 +1,22 @@
+---
+- name: Configure VLANs on Cisco IOS Switch
+  hosts: all
+  collections:
+   - cisco.ios
+  gather_facts: no
+  tasks:
+    - include_vars:
+        file: vlan_list.yaml
+        name: vlan_list
+    - name: Create VLAN's
+      ios_vlans:
+        config: "{{ vlan_list['vlans'] }}"
+        state: replaced
+      when: ansible_network_os == 'cisco.ios.ios'
+      register: result_vlans
+
+
+    - name: Print results
+      debug:
+        var:
+          result_vlans
