@@ -1,0 +1,25 @@
+---
+- name: Configure VLANs on Cisco IOS Switch
+  hosts: all
+  collections:
+   - cisco.ios
+  gather_facts: no
+  tasks:
+    - include_vars:
+        file: "{{ inventory_hostname }}_ports.yaml"
+        name: port_list
+    - debug:
+        msg: "{{ port_list }}"
+    - debug:
+        msg: "{{ inventory_hostname }}_ports['ports']"
+    - name: Configure L2 Ports
+      ios_l2_interfaces:
+        config: "{{ inventory_hostname }}_ports['ports']"
+        state: merged
+      when: ansible_network_os == 'cisco.ios.ios'
+      register: results
+
+    - name: Print results
+      debug:
+        var:
+          results
