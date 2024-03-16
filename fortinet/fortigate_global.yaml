@@ -17,7 +17,7 @@
     
     - name: Parse Fortigate version
       set_fact:
-        fortigate_version: "{{ system_status_output.meta.version[1:] }}" # strip de 'v' from the version number
+        fortigate_version: "{{ system_status_output.meta.version[1:] }}" # strip 'v' from the version number
     
     - name: Fortigate global config hardening
       fortios_system_global:
