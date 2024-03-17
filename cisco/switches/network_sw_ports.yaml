@@ -9,15 +9,16 @@
         file: "{{ inventory_hostname }}_ports.yaml"
         name: port_list
     - debug:
-        msg: "{{ port_list }}"
+        msg: "{{ port_list['ports'] }}"
     - name: Configure L2 Ports
       ios_l2_interfaces:
-        config: "{{ inventory_hostname }}_ports['ports']"
-        state: merged
+        config: "{{ port_list['ports'] }}"
+        state: replaced
       when: ansible_network_os == 'cisco.ios.ios'
       register: results
 
-    - name: Print results
-      debug:
-        var:
-          results
+    - name: Show diff
+      when: results.changed
+      ansible.utils.fact_diff:
+        before: "{{ results.before }}"
+        after: "{{ results.after }}"
