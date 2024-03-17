@@ -13,9 +13,10 @@
         config: "{{ vlan_list['vlans'] }}"
         state: replaced
       when: ansible_network_os == 'cisco.ios.ios'
-      register: result_vlans
+      register: results
 
-    - name: Print results
-      debug:
-        var:
-          result_vlans
+    - name: Show diff
+      when: results.changed
+      ansible.utils.fact_diff:
+        before: "{{ results.before }}"
+        after: "{{ results.after }}"
