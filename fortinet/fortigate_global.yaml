@@ -28,4 +28,11 @@
           speedtest_server: "disable"
           timezone: "26"
           vdom_mode: "multi-vdom"
+      register: results
+
+    - name: Show diff
+      when: results.changed
+      ansible.utils.fact_diff:
+        before: "{{ results.before }}"
+        after: "{{ results.after }}"
           
