@@ -25,7 +25,7 @@
           alias: "{{ inventory_hostname }}"
           gui_date_format: "yyyy/MM/dd"
           hostname: "{{ inventory_hostname }}"
-          timezone: "26"
+          #timezone: "26"
           vdom_mode: "multi-vdom"
       register: results
 
