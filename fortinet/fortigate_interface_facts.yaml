@@ -28,11 +28,11 @@
     
     - name: Collect Fortigate vdom interfaces
       fortios_monitor_fact:
-        vdom: "{ item.name }"
+        vdom: "{{ item.name }}"
         selector: 'system_interface'
-      loop: system_vdom_output.meta.results
+      loop: "{{ system_vdom_output.meta.results }}"
       loop_control:
-        label: item.name
+        label: "{{ item.name }}"
       register: system_interface_output
     - name: Print Fortigate interface output
       debug:
