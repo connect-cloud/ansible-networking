@@ -1,0 +1,19 @@
+---
+- name: Fortinet Fortigate gather Interface-info
+  hosts: all
+  connection: httpapi
+  gather_facts: false
+  collections:
+   - fortinet.fortios
+  vars:
+    ansible_httpapi_use_ssl: yes
+    ansible_httpapi_validate_certs: no
+    ansible_httpapi_port: 443
+  tasks:
+    - name: Collect Fortigate facts
+      fortios_monitor_fact:
+        selector: 'system_interface'
+      register: system_interface_output
+    - name: Parse Fortigate version
+      debug:
+        msg: "{{ system_interface_output }}"
