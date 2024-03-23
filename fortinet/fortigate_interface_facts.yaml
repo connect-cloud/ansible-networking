@@ -30,7 +30,7 @@
       fortios_monitor_fact:
         vdom: "{ item.name }"
         selector: 'system_interface'
-      loop: "{ system_vdom_output }"
+      loop: "{ system_vdom_output.results }"
       loop_control:
         label: "{ item.name }"
       register: system_interface_output
