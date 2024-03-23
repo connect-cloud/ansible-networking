@@ -10,10 +10,18 @@
     ansible_httpapi_validate_certs: no
     ansible_httpapi_port: 443
   tasks:
+    - name: Collect Fortigate VDOM's
+      fortios_monitor_fact:
+        selector: 'system_vdom-resource'
+      register: system_vdom_output
+    - name: Print Fortigate VDOM's
+      debug:
+        msg: "{{ system_vdom_output }}"
+    
     - name: Collect Fortigate facts
       fortios_monitor_fact:
         selector: 'system_interface'
       register: system_interface_output
-    - name: Parse Fortigate version
+    - name: Print Fortigate interface output
       debug:
         msg: "{{ system_interface_output }}"
