@@ -11,8 +11,8 @@
     ansible_httpapi_port: 443
   tasks:
     - name: Collect Fortigate VDOM's
-      fortios_monitor_fact:
-        selector: 'system_vdom-resource'
+      fortios_configuration_fact:
+        selector: 'system_vdom'
       register: system_vdom_output
     - name: Print Fortigate VDOM's
       debug:
