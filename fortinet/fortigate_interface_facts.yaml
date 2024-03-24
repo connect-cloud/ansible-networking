@@ -13,6 +13,8 @@
     - name: Collect Fortigate VDOM's
       fortios_configuration_fact:
         selector: 'system_vdom'
+        include_vlan: true
+        include_aggregate: true
       register: system_vdom_output
     - name: Print Fortigate VDOM's
       debug:
