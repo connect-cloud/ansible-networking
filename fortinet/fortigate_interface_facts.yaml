@@ -4,7 +4,7 @@
   connection: httpapi
   gather_facts: false
   collections:
-   - fortinet.fortios
+    - fortinet.fortios
   vars:
     ansible_httpapi_use_ssl: yes
     ansible_httpapi_validate_certs: no
@@ -13,8 +13,9 @@
     - name: Collect Fortigate VDOM's
       fortios_configuration_fact:
         selector: 'system_vdom'
-        include_vlan: true
-        include_aggregate: true
+        params:
+          - include_vlan: true
+          - include_aggregate: true
       register: system_vdom_output
     - name: Print Fortigate VDOM's
       debug:
