@@ -23,8 +23,7 @@
         vdom: "{{ item.name }}"
         selector: 'system_available-interfaces'
         params:
-          include_vlan: true
-          include_aggregate: true
+          include_ha: true
       loop: "{{ system_vdom_output.meta.results }}"
       loop_control:
         label: "{{ item.name }}"
