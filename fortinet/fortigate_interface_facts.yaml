@@ -13,9 +13,6 @@
     - name: Collect Fortigate VDOM's
       fortios_configuration_fact:
         selector: 'system_vdom'
-        params:
-          include_vlan: true
-          include_aggregate: true
       register: system_vdom_output
     - name: Print Fortigate VDOM's
       debug:
@@ -33,6 +30,9 @@
       fortios_monitor_fact:
         vdom: "{{ item.name }}"
         selector: 'system_interface'
+        params:
+          include_vlan: true
+          include_aggregate: true
       loop: "{{ system_vdom_output.meta.results }}"
       loop_control:
         label: "{{ item.name }}"
