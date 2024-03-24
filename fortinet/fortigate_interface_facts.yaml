@@ -14,8 +14,8 @@
       fortios_configuration_fact:
         selector: 'system_vdom'
         params:
-          - include_vlan: true
-          - include_aggregate: true
+          include_vlan: true
+          include_aggregate: true
       register: system_vdom_output
     - name: Print Fortigate VDOM's
       debug:
