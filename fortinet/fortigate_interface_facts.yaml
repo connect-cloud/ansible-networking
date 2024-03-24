@@ -18,18 +18,10 @@
       debug:
         msg: "{{ system_vdom_output.meta.results }}"
     
-    - name: Collect Fortigate interfaces
-      fortios_monitor_fact:
-        selector: 'system_interface'
-      register: system_interface_output
-    - name: Print Fortigate interface output
-      debug:
-        msg: "{{ system_interface_output }}"
-    
     - name: Collect Fortigate vdom interfaces
       fortios_monitor_fact:
         vdom: "{{ item.name }}"
-        selector: 'system_interface'
+        selector: 'system_available-interfaces'
         params:
           include_vlan: true
           include_aggregate: true
