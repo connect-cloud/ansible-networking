@@ -5,18 +5,17 @@
    - cisco.ios
   gather_facts: no
   tasks:
-    - include_vars:
-        file: "{{ inventory_hostname }}_ports.yaml"
-        name: port_list
-    - debug:
-        msg: "{{ port_list['ports'] }}"
-    - name: Configure L2 Ports
-      ios_l2_interfaces:
-        config: "{{ port_list['ports'] }}"
+    - name: Include vars file
+      include_vars:
+        file: vlan_list.yaml
+        name: vlan_list
+    - name: Create VLAN's
+      ios_vlans:
+        config: "{{ vlan_list.vlans }}"
         state: replaced
       when: ansible_network_os == 'cisco.ios.ios'
       register: results
-
+      
     - name: Show diff
       when: results.changed
       ansible.utils.fact_diff:
