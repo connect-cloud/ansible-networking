@@ -31,9 +31,9 @@
     - name: Fortigate global config version > 7.4.2
       fortios_system_global:
         system_global:
-          timezone: "Europe/Amsterdam"
+          #timezone: "Europe/Amsterdam"
       when: fortigate_version is version("7.4.2",'>')
-      
+
     - name: Fortigate global config version < 7.4.2
       fortios_system_global:
         system_global:
