@@ -15,6 +15,11 @@
         selector: 'system_status'
       register: system_status_output
     
+    - name: Collect Fortigate global config facts before possible changes
+      fortios_configuration_fact:
+        selector: 'system_global'
+      register: system_global_facts_before
+    
     - name: Parse Fortigate version
       set_fact:
         fortigate_version: "{{ system_status_output.meta.version[1:] }}" # strip 'v' from the version number
@@ -32,19 +37,24 @@
       fortios_system_global:
         system_global:
           #timezone: "Europe/Amsterdam"
+      register: results
       when: fortigate_version is version("7.4.2",'>')
 
     - name: Fortigate global config version < 7.4.2
       fortios_system_global:
         system_global:
           timezone: "26"
+      register: results
       when: fortigate_version is version("7.4.2",'<')
 
-
+    - name: Collect Fortigate global config facts after possible changes
+      fortios_configuration_fact:
+        selector: 'system_global'
+      register: system_global_facts_after
 
     - name: Show diff
       when: results.changed
       ansible.utils.fact_diff:
-        before: "{{ results.before }}"
-        after: "{{ results.after }}"
+        before: "{{ system_global_facts_before }}"
+        after: "{{ system_global_facts_after }}"
           
