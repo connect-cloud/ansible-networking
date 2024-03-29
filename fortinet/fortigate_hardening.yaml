@@ -48,6 +48,7 @@
           speedtest_server: "disable"
           #switch_controller: "disable"
           #wireless-controller: "disable"
+      register: results
 
     - name: Fortigate global hardening version < v7.0.1
       fortios_system_global:
