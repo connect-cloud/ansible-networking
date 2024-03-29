@@ -6,8 +6,8 @@
   collections:
    - fortinet.fortios
   vars:
-    ansible_httpapi_use_ssl: yes
-    ansible_httpapi_validate_certs: no # set to yes for security
+    ansible_httpapi_use_ssl: true
+    ansible_httpapi_validate_certs: false # set to yes for security
     ansible_httpapi_port: 443
   tasks:
     - name: Collect Fortigate facts
