@@ -33,12 +33,12 @@
           vdom_mode: "multi-vdom"
       register: results
 
-    - name: Fortigate global config version > 7.4.2
-      fortios_system_global:
-        system_global:
-          #timezone: "Europe/Amsterdam"
-      register: results
-      when: fortigate_version is version("7.4.2",'>')
+    # - name: Fortigate global config version > 7.4.2
+    #   fortios_system_global:
+    #     system_global:
+    #       #timezone: "Europe/Amsterdam"
+    #   register: results
+    #   when: fortigate_version is version("7.4.2",'>')
 
     - name: Fortigate global config version < 7.4.2
       fortios_system_global:
