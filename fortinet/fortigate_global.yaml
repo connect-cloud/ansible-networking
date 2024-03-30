@@ -53,7 +53,7 @@
       register: system_global_facts_after
 
     - name: Show diff
-      when: results.changed
+      #when: results.changed
       ansible.utils.fact_diff:
         before: "{{ system_global_facts_before }}"
         after: "{{ system_global_facts_after }}"
