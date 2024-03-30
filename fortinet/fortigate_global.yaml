@@ -1,5 +1,5 @@
 ---
-- name: Fortinet Fortigate hardening
+- name: Fortinet Fortigate Global settings
   hosts: all
   connection: httpapi
   gather_facts: false
