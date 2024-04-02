@@ -101,7 +101,7 @@
           status: "enable"
 
     - name: Show diff
-      when: results.changed
+      #when: results.changed
       ansible.utils.fact_diff:
         before: "{{ results.before }}"
         after: "{{ results.after }}"

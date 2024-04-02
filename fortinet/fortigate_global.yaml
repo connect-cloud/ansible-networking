@@ -44,7 +44,7 @@
       fortios_system_global:
         system_global:
           timezone: "26"
-      register: results_below-742
+      register: results_below_742
       when: fortigate_version is version("7.4.2",'<')
 
     - name: Collect Fortigate global config facts after possible changes
