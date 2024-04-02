@@ -31,20 +31,20 @@
           gui_date_format: "yyyy/MM/dd"
           hostname: "{{ inventory_hostname }}"
           vdom_mode: "multi-vdom"
-      register: results
+      register: results_all
 
     # - name: Fortigate global config version > 7.4.2
     #   fortios_system_global:
     #     system_global:
     #       #timezone: "Europe/Amsterdam"
-    #   register: results
+    #   register: results_above-7.4.2
     #   when: fortigate_version is version("7.4.2",'>')
 
     - name: Fortigate global config version < 7.4.2
       fortios_system_global:
         system_global:
           timezone: "26"
-      register: results
+      register: results_below-742
       when: fortigate_version is version("7.4.2",'<')
 
     - name: Collect Fortigate global config facts after possible changes
@@ -53,7 +53,7 @@
       register: system_global_facts_after
 
     - name: Show diff
-      #when: results.changed
+      when: results_all.changed and results_below-742.changed
       ansible.utils.fact_diff:
         before: "{{ system_global_facts_before }}"
         after: "{{ system_global_facts_after }}"
