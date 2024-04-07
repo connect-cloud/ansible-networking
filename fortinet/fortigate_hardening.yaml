@@ -1,5 +1,5 @@
 ---
-- name: Fortinet Fortigate hardening
+- name: Firewall hardening
   hosts: all
   connection: httpapi
   gather_facts: false
@@ -10,12 +10,12 @@
    ansible_httpapi_validate_certs: false # set to yes for security
    ansible_httpapi_port: 443
   tasks:
-   - name: Collect Fortigate facts
+   - name: Collect facts
      fortios_monitor_fact:
       selector: 'system_status'
      register: system_status_output
 
-   - name: Parse Fortigate version
+   - name: Parse version
      set_fact:
       fortigate_version: "{{ system_status_output.meta.version[1:] }}" # strip de 'v' from the version number
 
