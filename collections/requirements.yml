@@ -1,4 +1,4 @@
 ---
 collections:
-# - name: cisco.ios
+- name: cisco.ios:6.1.4
 - name: fortinet.fortios
