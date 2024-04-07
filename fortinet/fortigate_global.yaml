@@ -35,9 +35,9 @@
 
    - name: Fortigate global config version > 7.4.2
      fortios_system_global:
-       system_global:
-         timezone: "Europe/Amsterdam"
-     register: results_above-7.4.2
+      system_global:
+       timezone: "Europe/Amsterdam"
+     register: results_above_742
      when: fortigate_version is version("7.4.2",'>')
 
    - name: Fortigate global config version < 7.4.2
@@ -53,7 +53,7 @@
      register: system_global_facts_after
 
    - name: Show diff
-     when: results_all.changed and results_below_742.changed
+     when: results_all.changed and results_below_742.changed and results_above_742.changed
      ansible.utils.fact_diff:
       before: "{{ system_global_facts_before }}"
       after: "{{ system_global_facts_after }}"
