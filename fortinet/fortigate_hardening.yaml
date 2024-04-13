@@ -11,15 +11,16 @@
    ansible_httpapi_port: 443
   tasks:
    - name: Collect facts
+     register: system_status_output
      fortios_monitor_fact:
       selector: 'system_status'
-     register: system_status_output
 
    - name: Parse version
-     set_fact:
+     ansible.buildin.set_fact:
       fortigate_version: "{{ system_status_output.meta.version[1:] }}" # strip de 'v' from the version number
 
    - name: Fortigate global config hardening
+     register: results
      fortios_system_global:
       system_global:
        admin_console_timeout: "15"
@@ -48,7 +49,6 @@
        speedtest_server: "disable"
        # switch_controller: "disable"
        wireless_controller: "disable"
-     register: results
 
    - name: Fortigate global hardening version < v7.0.1
      fortios_system_global:
