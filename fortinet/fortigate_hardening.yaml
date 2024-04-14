@@ -17,6 +17,11 @@
      ansible.builtin.set_fact:
       fortigate_version: "{{ system_status_output.meta.version[1:] }}" # strip de 'v' from the version number
 
+   - name: Collect Fortigate global config facts before possible changes
+     register: system_global_facts_before
+     fortinet.fortios.fortios_configuration_fact:
+      selector: 'system_global'
+
    - name: Fortigate global config hardening
      notify:
       - Show diff
@@ -113,8 +118,13 @@
        reuse_password: "disable"
        status: "enable"
 
+   - name: Collect Fortigate global config facts after possible changes
+     register: system_global_facts_after
+     fortinet.fortios.fortios_configuration_fact:
+      selector: 'system_global'
+
   handlers:
    - name: Show diff
      ansible.utils.fact_diff:
-      before: "{{ results.before }}"
-      after: "{{ results.after }}"
+      before: "{{ system_global_facts_before }}"
+      after: "{{ system_global_facts_after }}"
