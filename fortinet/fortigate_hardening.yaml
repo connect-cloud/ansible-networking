@@ -18,7 +18,8 @@
       fortigate_version: "{{ system_status_output.meta.version[1:] }}" # strip de 'v' from the version number
 
    - name: Fortigate global config hardening
-     register: results
+     notify:
+      - Show diff
      fortinet.fortios.fortios_system_global:
       system_global:
        admin_console_timeout: "15"
@@ -49,41 +50,55 @@
        wireless_controller: "disable"
 
    - name: Fortigate global hardening version < v7.0.1
+     when: fortigate_version is version("7.0.1", '<')
+     notify:
+      - Show diff
      fortinet.fortios.fortios_system_global:
       system_global:
        ssh_mac_weak: "disable"
-     when: fortigate_version is version("7.0.1", '<')
 
    - name: Fortigate global hardening version v6.4.4 -> v7.0.1
+     when: (fortigate_version is version("6.4.4", '>')) and (fortigate_version is version("7.0.1", '<'))
+     notify:
+      - Show diff
      fortinet.fortios.fortios_system_global:
       system_global:
        fortiipam_integration: "disable"
-     when: (fortigate_version is version("6.4.4", '>')) and (fortigate_version is version("7.0.1", '<'))
 
    - name: Fortigate global hardening version < 7.2.2
+     when: fortigate_version is version("7.2.2", '<')
+     notify:
+      - Show diff
      fortinet.fortios.fortios_system_global:
       system_global:
        admin_maintainer: "disable"
-     when: fortigate_version is version("7.2.2", '<')
 
    - name: Fortigate global hardening version > 7.4.1
+     when: fortigate_version is version("7.4.1", '>')
+     notify:
+      - Show diff
      fortinet.fortios.fortios_system_global:
       system_global:
        sslvpn_web_mode: "disable"
-     when: fortigate_version is version("7.4.1", '>')
 
    - name: Fortigate disable Auto-install
+     notify:
+      - Show diff
      fortinet.fortios.fortios_system_auto_install:
       system_auto_install:
        auto_install_config: "disable"
        auto_install_image: "disable"
 
    - name: Fortigate disable ntp server
+     notify:
+      - Show diff
      fortinet.fortios.fortios_system_ntp:
       system_ntp:
        server_mode: "disable"
 
    - name: Fortigate global password policy
+     notify:
+      - Show diff
      fortinet.fortios.fortios_system_password_policy:
       system_password_policy:
        apply_to: "admin-password"
@@ -98,6 +113,7 @@
        reuse_password: "disable"
        status: "enable"
 
+  handlers:
    - name: Show diff
      when: results.changed
      ansible.utils.fact_diff:

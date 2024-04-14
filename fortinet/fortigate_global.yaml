@@ -33,15 +33,14 @@
 
    - name: Fortigate global config version > 7.4.2
      register: results_above_742
-     when: fortigate_version is version("7.4.2",'>')
+     when: fortigate_version is version("7.4.2", '>')
      fortinet.fortios.fortios_system_global:
       system_global:
        timezone: "Europe/Amsterdam"
-     
 
    - name: Fortigate global config version < 7.4.2
      register: results_below_742
-     when: fortigate_version is version("7.4.2",'<')
+     when: fortigate_version is version("7.4.2", '<')
      fortinet.fortios.fortios_system_global:
       system_global:
        timezone: "26"
@@ -50,7 +49,6 @@
      register: system_global_facts_after
      fortinet.fortios.fortios_configuration_fact:
       selector: 'system_global'
-     
 
    - name: Show diff
      when: results_all.changed or results_below_742.changed or results_above_742.changed
