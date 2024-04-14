@@ -52,7 +52,7 @@
      fortinet.fortios.fortios_system_global:
       system_global:
        ssh_mac_weak: "disable"
-     when: fortigate_version is version("7.0.1",'<')
+     when: fortigate_version is version("7.0.1", '<')
 
    - name: Fortigate global hardening version v6.4.4 -> v7.0.1
      fortinet.fortios.fortios_system_global:
@@ -64,13 +64,13 @@
      fortinet.fortios.fortios_system_global:
       system_global:
        admin_maintainer: "disable"
-     when: fortigate_version is version("7.2.2",'<')
+     when: fortigate_version is version("7.2.2", '<')
 
    - name: Fortigate global hardening version > 7.4.1
      fortinet.fortios.fortios_system_global:
       system_global:
        sslvpn_web_mode: "disable"
-     when: fortigate_version is version("7.4.1",'>')
+     when: fortigate_version is version("7.4.1", '>')
 
    - name: Fortigate disable Auto-install
      fortinet.fortios.fortios_system_auto_install:
