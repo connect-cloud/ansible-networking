@@ -3,8 +3,6 @@
   hosts: all
   connection: httpapi
   gather_facts: false
-  collections:
-   - fortinet.fortios
   vars:
    ansible_httpapi_use_ssl: true
    ansible_httpapi_validate_certs: false # set to yes for security
@@ -12,7 +10,7 @@
   tasks:
    - name: Collect facts
      register: system_status_output
-     fortios_monitor_fact:
+     fortinet.fortios.fortios_monitor_fact:
       selector: 'system_status'
 
    - name: Parse version

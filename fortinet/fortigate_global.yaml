@@ -3,54 +3,54 @@
   hosts: all
   connection: httpapi
   gather_facts: false
-  collections:
-   - fortinet.fortios
   vars:
    ansible_httpapi_use_ssl: true
    ansible_httpapi_validate_certs: false # set to yes for security
    ansible_httpapi_port: 443
   tasks:
    - name: Collect Fortigate facts
-     fortios_monitor_fact:
-      selector: 'system_status'
      register: system_status_output
+     fortinet.fortios.fortios_monitor_fact:
+      selector: 'system_status'
 
    - name: Collect Fortigate global config facts before possible changes
-     fortios_configuration_fact:
-      selector: 'system_global'
      register: system_global_facts_before
+     fortinet.fortios.fortios_configuration_fact:
+      selector: 'system_global'
 
    - name: Parse Fortigate version
-     set_fact:
+     ansible.buildin.set_fact:
       fortigate_version: "{{ system_status_output.meta.version[1:] }}" # strip 'v' from the version number
 
    - name: Fortigate global config
-     fortios_system_global:
+     register: results_all
+     fortinet.fortios.fortios_system_global:
       system_global:
        alias: "{{ inventory_hostname }}"
        gui_date_format: "yyyy/MM/dd"
        hostname: "{{ inventory_hostname }}"
        vdom_mode: "multi-vdom"
-     register: results_all
 
    - name: Fortigate global config version > 7.4.2
-     fortios_system_global:
-      system_global:
-       timezone: "Europe/Amsterdam"
      register: results_above_742
      when: fortigate_version is version("7.4.2",'>')
+     fortinet.fortios.fortios_system_global:
+      system_global:
+       timezone: "Europe/Amsterdam"
+     
 
    - name: Fortigate global config version < 7.4.2
-     fortios_system_global:
-      system_global:
-       timezone: "26"
      register: results_below_742
      when: fortigate_version is version("7.4.2",'<')
+     fortinet.fortios.fortios_system_global:
+      system_global:
+       timezone: "26"
 
    - name: Collect Fortigate global config facts after possible changes
-     fortios_configuration_fact:
-      selector: 'system_global'
      register: system_global_facts_after
+     fortinet.fortios.fortios_configuration_fact:
+      selector: 'system_global'
+     
 
    - name: Show diff
      when: results_all.changed or results_below_742.changed or results_above_742.changed
