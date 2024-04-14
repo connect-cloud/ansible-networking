@@ -21,7 +21,7 @@
 
    - name: Fortigate global config hardening
      register: results
-     fortios_system_global:
+     fortinet.fortios.fortios_system_global:
       system_global:
        admin_console_timeout: "15"
        admin_lockout_duration: "900"
@@ -51,42 +51,42 @@
        wireless_controller: "disable"
 
    - name: Fortigate global hardening version < v7.0.1
-     fortios_system_global:
+     fortinet.fortios.fortios_system_global:
       system_global:
        ssh_mac_weak: "disable"
      when: fortigate_version is version("7.0.1",'<')
 
    - name: Fortigate global hardening version v6.4.4 -> v7.0.1
-     fortios_system_global:
+     fortinet.fortios.fortios_system_global:
       system_global:
        fortiipam_integration: "disable"
      when: (fortigate_version is version("6.4.4",'>')) and (fortigate_version is version("7.0.1",'<'))
 
    - name: Fortigate global hardening version < 7.2.2
-     fortios_system_global:
+     fortinet.fortios.fortios_system_global:
       system_global:
        admin_maintainer: "disable"
      when: fortigate_version is version("7.2.2",'<')
 
    - name: Fortigate global hardening version > 7.4.1
-     fortios_system_global:
+     fortinet.fortios.fortios_system_global:
       system_global:
        sslvpn_web_mode: "disable"
      when: fortigate_version is version("7.4.1",'>')
 
    - name: Fortigate disable Auto-install
-     fortios_system_auto_install:
+     fortinet.fortios.fortios_system_auto_install:
       system_auto_install:
        auto_install_config: "disable"
        auto_install_image: "disable"
 
    - name: Fortigate disable ntp server
-     fortios_system_ntp:
+     fortinet.fortios.fortios_system_ntp:
       system_ntp:
        server_mode: "disable"
 
    - name: Fortigate global password policy
-     fortios_system_password_policy:
+     fortinet.fortios.fortios_system_password_policy:
       system_password_policy:
        apply_to: "admin-password"
        expire_day: "365"
