@@ -58,7 +58,7 @@
      fortinet.fortios.fortios_system_global:
       system_global:
        fortiipam_integration: "disable"
-     when: (fortigate_version is version("6.4.4",'>')) and (fortigate_version is version("7.0.1",'<'))
+     when: (fortigate_version is version("6.4.4", '>')) and (fortigate_version is version("7.0.1", '<'))
 
    - name: Fortigate global hardening version < 7.2.2
      fortinet.fortios.fortios_system_global:
