@@ -11,7 +11,7 @@
    - name: Collect facts
      register: system_status_output
      fortinet.fortios.fortios_monitor_fact:
-      selector: 'system_status'
+      # selector: 'system_status'
 
    - name: Parse version
      ansible.builtin.set_fact:
@@ -121,7 +121,7 @@
    - name: Collect Fortigate global config facts after possible changes
      register: system_global_facts_after
      fortinet.fortios.fortios_configuration_fact:
-      selector: 'system_global'
+      # selector: 'system_global'
 
   handlers:
    - name: Show diff
