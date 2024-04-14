@@ -11,7 +11,7 @@
    - name: Collect Fortigate facts
      register: system_status_output
      fortinet.fortios.fortios_monitor_fact:
-      selector: 'system_status'
+      selector: system_status
 
    - name: Collect Fortigate global config facts before possible changes
      register: system_global_facts_before
