@@ -19,7 +19,7 @@
       selector: 'system_global'
 
    - name: Parse Fortigate version
-     ansible.buildin.set_fact:
+     ansible.builtin.set_fact:
       fortigate_version: "{{ system_status_output.meta.version[1:] }}" # strip 'v' from the version number
 
    - name: Fortigate global config
