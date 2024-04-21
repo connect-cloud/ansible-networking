@@ -2,19 +2,24 @@
 - name: Configure VLANs on Cisco IOS Switch
   hosts: all
   gather_facts: false
+
   tasks:
-    - include_vars:
+    - name: Import varialbles
+      ansible.buildin.include_vars:
         file: vlan_list.yaml
         name: vlan_list
+
     - name: Create VLAN's
+      when: ansible_network_os == 'cisco.ios.ios'
+      notify:
+        - diff
+      register: results
       cisco.ios.ios_vlans:
         config: "{{ vlan_list['vlans'] }}"
         state: replaced
-      when: ansible_network_os == 'cisco.ios.ios'
-      register: results
-
-    - name: Show diff
-      when: results.changed
+      
+  handlers:
+    - name: diff
       ansible.utils.fact_diff:
         before: "{{ results.before }}"
         after: "{{ results.after }}"
