@@ -13,12 +13,16 @@
       when: ansible_network_os == 'cisco.ios.ios'
       notify:
         - Diff
+        - Copy-config_run_start
       register: results
       cisco.ios.ios_vlans:
         config: "{{ vlan_list['vlans'] }}"
         state: replaced
 
   handlers:
+    - name: Copy-config_run_start
+      cisco.ios.config:
+        save_when: always
     - name: Diff
       ansible.utils.fact_diff:
         before: "{{ results.before }}"
