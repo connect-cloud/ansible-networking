@@ -12,14 +12,14 @@
     - name: Create VLAN's
       when: ansible_network_os == 'cisco.ios.ios'
       notify:
-        - diff
+        - Diff
       register: results
       cisco.ios.ios_vlans:
         config: "{{ vlan_list['vlans'] }}"
         state: replaced
-      
+
   handlers:
-    - name: diff
+    - name: Diff
       ansible.utils.fact_diff:
         before: "{{ results.before }}"
         after: "{{ results.after }}"
