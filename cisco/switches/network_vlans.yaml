@@ -21,7 +21,7 @@
 
   handlers:
     - name: Copy-config_run_start
-      cisco.ios.config:
+      cisco.ios.ios_config:
         save_when: always
     - name: Diff
       ansible.utils.fact_diff:
