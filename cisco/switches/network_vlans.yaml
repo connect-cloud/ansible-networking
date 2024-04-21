@@ -5,7 +5,7 @@
 
   tasks:
     - name: Import varialbles
-      ansible.buildin.include_vars:
+      ansible.builtin.include_vars:
         file: vlan_list.yaml
         name: vlan_list
 
