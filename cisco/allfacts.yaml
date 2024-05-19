@@ -12,3 +12,13 @@
     - name: Display facts
       ansible.builtin.debug:
         var: ios_facts
+
+    - name: Gather resource facts
+      register: ios_resource_facts
+      cisco.ios.ios:
+        gather_network_resources:
+          - all
+
+    - name: Display resource facts
+      ansible.builtin.debug:
+        var: ios_resource_facts
