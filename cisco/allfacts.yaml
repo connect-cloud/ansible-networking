@@ -1,0 +1,14 @@
+---
+- name: Gather all facts from cisco network equipment
+  hosts: all
+  tasks:
+    - name: Gather IOS facts
+      when: ansible_network_os == 'cisco.ios.ios'
+      register: ios_facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - all
+
+    - name: Display facts
+      ansible.builtin.debug:
+        var: ios_facts
