@@ -1,14 +1,13 @@
 ---
 - name: Configure VLANs on Cisco IOS Switch
   hosts: all
-  collections:
-   - cisco.ios
   gather_facts: false
   tasks:
     - name: Include vars file
       include_vars:
         file: vlan_list.yaml
         name: vlan_list
+
     - name: Create VLAN's
       cisco.ios.ios_vlans:
         config: "{{ vlan_list.vlans }}"
