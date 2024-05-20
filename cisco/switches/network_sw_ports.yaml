@@ -3,19 +3,19 @@
   hosts: all
   collections:
    - cisco.ios
-  gather_facts: no
+  gather_facts: false
   tasks:
     - name: Include vars file
       include_vars:
         file: vlan_list.yaml
         name: vlan_list
     - name: Create VLAN's
-      ios_vlans:
+      cisco.ios.ios_vlans:
         config: "{{ vlan_list.vlans }}"
         state: replaced
       when: ansible_network_os == 'cisco.ios.ios'
       register: results
-      
+
     - name: Show diff
       when: results.changed
       ansible.utils.fact_diff:
