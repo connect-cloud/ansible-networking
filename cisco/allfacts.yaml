@@ -1,6 +1,7 @@
 ---
 - name: Gather all facts from cisco network equipment
   hosts: all
+  gather_facts:false
   tasks:
     - name: Gather IOS facts
       when: ansible_network_os == 'cisco.ios.ios'
