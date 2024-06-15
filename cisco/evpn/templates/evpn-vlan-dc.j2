@@ -1,0 +1,23 @@
+interface Bundle-Ether100.{{ dc_vlan }}
+ encasulation dot1q {{ dc_vlan }}
+ rewrite ingress tag pop 1 symetric
+ service-policy input {{ service_policy }}
+
+evpn
+ evi {{ dc_vlan }}
+  bgp
+   route-target import {{ evpn_as }}:{{ dc_vlan }}
+   route-target export {{ evpn_as }}:{{ dc_vlan }}
+ control-word-disable
+ load-balancing
+  flow-label static
+ advertise-mac
+
+l2vpn
+ bridge group EVPN
+  bridge-domain VLAN{{ dc_vlan }}
+   interface Bundle-Ether100.{{ dc_vlan }}
+    storm-contol unknown-unicast kbps {{ storm_u_kbps }}
+    storm-contol broadcast kbps {{ storm_b_kbps }}
+   evi {{ dc_vlan }}
+
